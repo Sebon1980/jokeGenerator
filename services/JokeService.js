@@ -58,10 +58,6 @@ JokeService.getJokesByCat = function getJokesByCat(cat) {
 
 JokeService.getRandomJoke = function getRandomJoke() {
     categories = Object.keys(jokes);
-    for (var obj in categories) {
-
-    }
-
     return categories;
 }
 
