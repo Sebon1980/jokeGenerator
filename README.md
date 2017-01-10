@@ -12,3 +12,19 @@ npm install
 ```BASH
 node server.js
 ```
+
+## Handlers
+### getCategoriesHandler
+```BASH
+handler: require('./handler/getCategoriesHandler')
+```
+
+### getJokesByCat
+```BASH
+handler: require('./handler/getJokesByCat')
+```
+
+### getRandomJoke
+```BASH
+handler: require('./handler/getRandomJoke')
+```
