@@ -48,12 +48,24 @@ var jokes = {
  * 
  */
 JokeService.getCategories = function getCategories() {
-    return "foo";
+
+    catList = [];
+
+    for (var prop in jokes) {
+        i = 0;
+        title = Object.keys(jokes);
+        url = jokes[prop][0].url;
+        var catInfo = { title: title[i], url: url };
+        catList.push(catInfo);
+        i++;
+    }
+    return catList;
 }
 
 JokeService.getJokesByCat = function getJokesByCat(cat) {
     sizeOfJoke = jokes[cat].length;
     rJoke = Math.floor(Math.random() * sizeOfJoke);
+
     return jokes[cat][rJoke].text;
 }
 
