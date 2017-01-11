@@ -52,8 +52,9 @@ JokeService.getCategories = function getCategories() {
 }
 
 JokeService.getJokesByCat = function getJokesByCat(cat) {
-
-    return jokes[cat][1].text;
+    sizeOfJoke = jokes[cat].length;
+    rJoke = Math.floor(Math.random() * sizeOfJoke);
+    return jokes[cat][rJoke].text;
 }
 
 JokeService.getRandomJoke = function getRandomJoke() {
@@ -65,7 +66,5 @@ JokeService.getRandomJoke = function getRandomJoke() {
 
     return jokes[rCat][rJoke].text;
 }
-
-
 
 module.exports = JokeService;
