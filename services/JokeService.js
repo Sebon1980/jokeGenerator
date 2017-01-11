@@ -53,12 +53,17 @@ JokeService.getCategories = function getCategories() {
 
 JokeService.getJokesByCat = function getJokesByCat(cat) {
 
-    return jokes;
+    return jokes[cat][1].text;
 }
 
 JokeService.getRandomJoke = function getRandomJoke() {
     categories = Object.keys(jokes);
-    return categories;
+    sizeOfCat = categories.length;
+    rCat = categories[Math.floor(Math.random() * sizeOfCat)];
+    sizeOfJoke = jokes[rCat].length;
+    rJoke = Math.floor(Math.random() * sizeOfJoke);
+
+    return jokes[rCat][rJoke].text;
 }
 
 
