@@ -15,6 +15,8 @@ server.start((err) => {
 });
 
 
+
+
 server.route({
     method: 'GET',
     path: '/',
@@ -40,3 +42,13 @@ server.route({
     path: '/joke/random',
     handler: require('./handler/getRandomJoke')
 });
+server.route({
+    method: 'GET',
+    path: '/joke/dbJoke/dbCats',
+    handler: require('./handler/getSqlCats')
+})
+server.route({
+    method: 'GET',
+    path: '/joke/dbJoke/{category}',
+    handler: require('./handler/getSqlJokeByCat')
+})

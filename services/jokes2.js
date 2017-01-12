@@ -1,6 +1,14 @@
 const JokeService = {};
 const boom = require('boom');
-
+var knex = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: '127.0.0.1',
+        user: 'root',
+        password: 'password',
+        database: 'JokeGenTest'
+    }
+});
 
 var jokes = [{
         "title": "chuck",
@@ -33,7 +41,9 @@ var jokes = [{
 JokeService.getCategories = function getCategories() {
     categories = [];
     for (var i = 0; i < jokes.length; i++) {
-        cat = { "title": jokes[i].title, "url": jokes[i].url };
+        cat = {};
+        cat.Title = (jokes[i].title);
+        cat.url = (jokes[i].url);
         categories.push(cat);
     }
     return categories;
@@ -43,16 +53,41 @@ JokeService.getJokesByCat = function getJokesByCat(cat) {
     var joke;
     for (i = 0; i < jokes.length; i++) {
         if (jokes[i].title === cat) {
-            joke = jokes[i].jokeList[rJokeMath.floor(Math.random() * jokes[i].jokeList.length)]
+            sizeOfJoke = jokes[i].jokeList.length;
+            rJoke = Math.floor(Math.random() * sizeOfJoke);
+            joke = jokes[i].jokeList[rJoke]
             return joke;
         }
+
     }
     return boom.badRequest('Category doesn´t exist!');
 }
-
 JokeService.getRandomJoke = function getRandomJoke() {
     rJoke = jokes[Math.floor(Math.random() * jokes.length)].jokeList[Math.floor(Math.random() * jokes[Math.floor(Math.random() * jokes.length)].jokeList.length)];
     return rJoke;
+}
+
+JokeService.getSqlCats = function() {
+    return new Promise((fulfill, reject) => {
+        sqlCom = knex.select('catName', 'catUrl').from('categories').timeout(1000)
+            .then((a) => {
+                dbCats = a;
+                console.log(dbCats);
+                fulfill(dbCats);
+            });
+    });
+}
+
+JokeService.getSqlJokeByCat = function(cat) {
+    return new Promise((fulfill, reject) => {
+        selectedCat = knex.select('catID').from('categories').where('catName', cat).timeout(1000);
+        sqlCom = knex.select('jokeTxt').from('jokes').where('catID', selectedCat).timeout(1000)
+            .then((a) => {
+                dbJoke = a;
+                fulfill(dbJoke[Math.floor(Math.random() * dbJoke.length)].jokeTxt);
+            })
+    })
+
 }
 
 module.exports = JokeService;
