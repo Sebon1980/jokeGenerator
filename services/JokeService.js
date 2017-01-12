@@ -51,8 +51,13 @@ JokeService.getCategories = function getCategories() {
 
     catList = [];
 
+    for (var i = 0; i < jokes.length; i++) {
+
+    }
+
     for (var prop in jokes) {
         i = 0;
+        console.log(prop);
         title = Object.keys(jokes);
         url = jokes[prop][0].url;
         var catInfo = { title: title[i], url: url };

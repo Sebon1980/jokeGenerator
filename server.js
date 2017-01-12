@@ -24,7 +24,7 @@ server.route({
 server.route({
     method: 'GET',
     path: '/joke',
-    handler: require('./handler/getCategoriesHandler')
+    handler: require('./handler/getCategories')
 });
 
 
