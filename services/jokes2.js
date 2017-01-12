@@ -33,9 +33,7 @@ var jokes = [{
 JokeService.getCategories = function getCategories() {
     categories = [];
     for (var i = 0; i < jokes.length; i++) {
-        cat = {};
-        cat.Title = (jokes[i].title);
-        cat.url = (jokes[i].url);
+        cat = { "title": jokes[i].title, "url": jokes[i].url };
         categories.push(cat);
     }
     return categories;
@@ -45,24 +43,16 @@ JokeService.getJokesByCat = function getJokesByCat(cat) {
     var joke;
     for (i = 0; i < jokes.length; i++) {
         if (jokes[i].title === cat) {
-            sizeOfJoke = jokes[i].jokeList.length;
-            rJoke = Math.floor(Math.random() * sizeOfJoke);
-            joke = jokes[i].jokeList[rJoke]
+            joke = jokes[i].jokeList[rJokeMath.floor(Math.random() * jokes[i].jokeList.length)]
             return joke;
         }
-
     }
     return boom.badRequest('Category doesn´t exist!');
 }
 
 JokeService.getRandomJoke = function getRandomJoke() {
-    categories = Object.keys(jokes);
-    sizeOfCat = categories.length;
-    rCat = categories[Math.floor(Math.random() * sizeOfCat)];
-    sizeOfJoke = jokes[rCat].length;
-    rJoke = Math.floor(Math.random() * sizeOfJoke);
-
-    return jokes[rCat][rJoke].text;
+    rJoke = jokes[Math.floor(Math.random() * jokes.length)].jokeList[Math.floor(Math.random() * jokes[Math.floor(Math.random() * jokes.length)].jokeList.length)];
+    return rJoke;
 }
 
 module.exports = JokeService;
