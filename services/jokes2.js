@@ -45,9 +45,9 @@ JokeService.getCategories = function getCategories() {
         cat.Title = (jokes[i].title);
         cat.url = (jokes[i].url);
         categories.push(cat);
-    }
+    };
     return categories;
-}
+};
 
 JokeService.getJokesByCat = function getJokesByCat(cat) {
     var joke;
@@ -57,37 +57,60 @@ JokeService.getJokesByCat = function getJokesByCat(cat) {
             rJoke = Math.floor(Math.random() * sizeOfJoke);
             joke = jokes[i].jokeList[rJoke]
             return joke;
-        }
-
-    }
+        };
+    };
     return boom.badRequest('Category doesn´t exist!');
-}
+};
+
 JokeService.getRandomJoke = function getRandomJoke() {
     rJoke = jokes[Math.floor(Math.random() * jokes.length)].jokeList[Math.floor(Math.random() * jokes[Math.floor(Math.random() * jokes.length)].jokeList.length)];
     return rJoke;
-}
+};
 
 JokeService.getSqlCats = function() {
     return new Promise((fulfill, reject) => {
-        sqlCom = knex.select('catName', 'catUrl').from('categories').timeout(1000)
+        sqlCom = knex.select('catID', 'catName', 'catUrl').from('categories').timeout(1000)
             .then((a) => {
                 dbCats = a;
-                console.log(dbCats);
                 fulfill(dbCats);
             });
     });
-}
+};
 
 JokeService.getSqlJokeByCat = function(cat) {
     return new Promise((fulfill, reject) => {
-        selectedCat = knex.select('catID').from('categories').where('catName', cat).timeout(1000);
+        selectedCat = knex.select('catID').from('categories').where('catName', cat).timeout(1000)
         sqlCom = knex.select('jokeTxt').from('jokes').where('catID', selectedCat).timeout(1000)
             .then((a) => {
                 dbJoke = a;
                 fulfill(dbJoke[Math.floor(Math.random() * dbJoke.length)].jokeTxt);
-            })
-    })
+            });
+    });
+};
 
+JokeService.getSqlRandomJoke = function() {
+    return new Promise((fulfill, reject) => {
+        knex.select('catID').from('categories').timeout(1000)
+            .then((catIds) => {
+                let catId = catIds[Math.floor(Math.random() * catIds.length)].catID;
+                knex.select('jokeTxt').from('jokes').where('catID', catId).timeout(1000)
+                    .then((dbJoke) => {
+                        fulfill(dbJoke[Math.floor(Math.random() * dbJoke.length)].jokeTxt);
+                    });
+            });
+    });
+};
+
+JokeService.newSqlCat = function(cat) {
+    dbCats = knex.select('catName').from('categories');
+    if (!dbCats.includes(cat)) {
+        knex('categories').insert({ catName: cat, catUrl: 'Anonym:3000/dbJoke/' + cat })
+    } else {
+        alert('Category already exist!')
+    }
 }
 
+JokeService.newSqlJoke = function(joke) {
+    knex('jokes').insert({ catID: joke.category_id, jokeTxt: joke.text });
+}
 module.exports = JokeService;
