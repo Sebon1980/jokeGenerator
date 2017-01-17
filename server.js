@@ -15,46 +15,19 @@ server.start((err) => {
 });
 
 
-
-
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: require('./handler/WelcomeHandler')
-});
-
 server.route({
     method: 'GET',
     path: '/joke',
-    handler: require('./handler/getCategories')
-});
-
-
-server.route({
-    method: 'GET',
-    path: '/joke/{category}',
-    handler: require('./handler/getJokesByCat')
-});
-
-
-server.route({
-    method: 'GET',
-    path: '/joke/random',
-    handler: require('./handler/getRandomJoke')
-});
-server.route({
-    method: 'GET',
-    path: '/dbJoke',
     handler: require('./handler/getSqlCats')
 })
 server.route({
     method: 'GET',
-    path: '/dbJoke/{category}',
+    path: '/joke/{category}',
     handler: require('./handler/getSqlJokeByCat')
 })
 server.route({
     method: 'GET',
-    path: '/dbJoke/random',
+    path: '/joke/random',
     handler: require('./handler/getSqlRandomJoke')
 })
 
