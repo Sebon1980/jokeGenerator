@@ -54,7 +54,23 @@ JokeService.newSqlCat = function(cat) {
     }
 }
 
-JokeService.newSqlJoke = function(joke) {
-    knex('jokes').insert({ catID: joke.category_id, jokeTxt: joke.text });
+JokeService.addNewJoke = function(joke) {
+    console.log('service', joke)
+    return new Promise((fulfill, reject) => {
+        knex('jokes').insert({ catID: joke.catId, jokeTxt: joke.text })
+            .then((result) => {
+                fulfill(result);
+                console.log('db', result)
+            }).catch(e => {
+                reject(e);
+                console.log('error', e);
+            });
+    })
 }
+
+JokeService.getJokeById = function(id) {
+
+};
+
+
 module.exports = JokeService;
