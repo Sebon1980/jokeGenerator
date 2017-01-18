@@ -14,17 +14,31 @@ node server.js
 ```
 
 ## Handlers
-### getCategoriesHandler
+### getSqlCats
 ```BASH
-handler: require('./handler/getCategoriesHandler')
+handler: require('./handler/getSqlCats')
 ```
 
-### getJokesByCat
+### getSqlCatById
 ```BASH
-handler: require('./handler/getJokesByCat')
+handler: require('./handler/getSqlCatById)
 ```
 
-### getRandomJoke
+### getSqlJokeByCat
 ```BASH
-handler: require('./handler/getRandomJoke')
+handler: require('./handler/getSqlJokeByCat')
+```
+
+### getSqlJokeById
+```BASH
+handler: require('./handler/getSqlJokeById')
+
+### getSqlRandomJoke
+```BASH
+handler: require('./handler/getSqlRandomJoke')
+```
+
+### addNewJoke
+```BASH
+handler: require('./handler/addNewJoke')
 ```
