@@ -79,14 +79,26 @@ JokeService.getSqlJokeById = function(id) {
     })
 };
 
-JokeService.getSqlCatByID = function(id) {
+JokeService.getSqlCatById = function(id) {
     return new Promise((fulfill, reject) => {
         knex.select().from('categories').where('catID', id).timeout(1000)
             .then((result) => {
                 fulfill(result);
             }).catch(err => {
                 reject(err);
-                console.log('category doesnt exist', err);
+                console.log('category doesn´t exist', err);
+            });
+    })
+}
+
+JokeService.deleteJokeById = function(id) {
+    return new Promise((fulfill, reject) => {
+        knex('jokes').where('jokeID', id).del()
+            .then((delJoke) => {
+                fulfill(delJoke);
+            }).catch(err => {
+                reject(err);
+                console.log('joke doesn´t exist', err)
             });
     })
 }

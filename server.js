@@ -47,3 +47,9 @@ server.route({
     path: '/joke/getCat/{id}',
     handler: require('./handler/getSqlCatById')
 })
+
+server.route({
+    method: 'POST',
+    path: '/joke/deleteJoke',
+    handler: require('./handler/deleteJokeById')
+})
