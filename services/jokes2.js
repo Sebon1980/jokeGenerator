@@ -23,10 +23,9 @@ JokeService.getSqlCats = function() {
 
 JokeService.getSqlJokeByCat = function(cat) {
     return new Promise((fulfill, reject) => {
-        selectedCat = knex.select('catID').from('categories').where('catName', cat).timeout(1000)
-        sqlCom = knex.select('jokeTxt').from('jokes').where('catID', selectedCat).timeout(1000)
-            .then((a) => {
-                dbJoke = a;
+        var selectedCat = knex.select('catID').from('categories').where('catName', cat).timeout(1000)
+        knex.select('jokeTxt').from('jokes').where('catID', selectedCat).timeout(1000)
+            .then((dbJokea) => {
                 fulfill(dbJoke[Math.floor(Math.random() * dbJoke.length)].jokeTxt);
             });
     });
@@ -59,7 +58,7 @@ JokeService.addNewJoke = function(joke) {
     return new Promise((fulfill, reject) => {
         knex('jokes').insert({ catID: joke.catId, jokeTxt: joke.text })
             .then((result) => {
-                fulfill(result);
+                fulfill(JokeService.getSqlJokeById(result));
                 console.log('db', result)
             }).catch(e => {
                 reject(e);
@@ -68,8 +67,13 @@ JokeService.addNewJoke = function(joke) {
     })
 }
 
-JokeService.getJokeById = function(id) {
-
+JokeService.getSqlJokeById = function(id) {
+    return new Promise((fulfill, reject) => {
+        knex.select().from('jokes').where('jokeID', id).timeout(1000)
+            .then((result) => {
+                fulfill(result);
+            })
+    })
 };
 
 

@@ -36,3 +36,9 @@ server.route({
     path: '/joke',
     handler: require('./handler/addNewJoke')
 });
+
+server.route({
+    method: 'GET',
+    path: '/joke/test/{id}',
+    handler: require('./handler/getSqlJokeById')
+})
