@@ -60,9 +60,9 @@ JokeService.addNewJoke = function(joke) {
             .then((result) => {
                 fulfill(JokeService.getSqlJokeById(result));
                 console.log('db', result)
-            }).catch(e => {
-                reject(e);
-                console.log('error', e);
+            }).catch(err => {
+                reject(err);
+                console.log('error', err);
             });
     })
 }
@@ -72,9 +72,24 @@ JokeService.getSqlJokeById = function(id) {
         knex.select().from('jokes').where('jokeID', id).timeout(1000)
             .then((result) => {
                 fulfill(result);
-            })
+            }).catch(err => {
+                reject(err);
+                console.log('Joke doesn´t exist', err);
+            });
     })
 };
+
+JokeService.getSqlCatByID = function(id) {
+    return new Promise((fulfill, reject) => {
+        knex.select().from('categories').where('catID', id).timeout(1000)
+            .then((result) => {
+                fulfill(result);
+            }).catch(err => {
+                reject(err);
+                console.log('category doesnt exist', err);
+            });
+    })
+}
 
 
 module.exports = JokeService;
