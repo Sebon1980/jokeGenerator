@@ -32,6 +32,7 @@ handler: require('./handler/getSqlJokeByCat')
 ### getSqlJokeById
 ```BASH
 handler: require('./handler/getSqlJokeById')
+```
 
 ### getSqlRandomJoke
 ```BASH
